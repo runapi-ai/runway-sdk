@@ -1,106 +1,72 @@
 ---
 name: runway
-description: Generate and extend videos, plus run Aleph video-to-video transforms, through RunAPI.ai using the @runapi.ai/runway Node/TypeScript SDK. Use when the user asks to add Runway video generation, video extension, Aleph transforms, or writes against @runapi.ai/runway. Triggers on "runway", "video generation", "video extension", "Aleph", "@runapi.ai/runway".
-documentation: https://runapi.ai/models/runway
-provider_page: https://runapi.ai/providers/runway
-catalog: https://runapi.ai/models
+description: Generate and edit video with Runway through RunAPI. Use when the user asks an agent to create, edit, or transform video with Runway. Default to the RunAPI CLI for one-off generation; use SDKs only when the user is integrating RunAPI into an app or backend.
+documentation: https://runapi.ai/models/runway.md
+provider_page: https://runapi.ai/providers/runway.md
+catalog: https://runapi.ai/models.md
+metadata:
+  openclaw:
+    homepage: https://runapi.ai/models/runway
+    requires:
+      bins:
+      - runapi
+    install:
+    - kind: brew
+      formula: runapi-ai/tap/runapi
+      bins:
+      - runapi
+    envVars:
+    - name: RUNAPI_API_KEY
+      required: false
+      description: Optional RunAPI API key; agents should prefer environment auth or saved CLI config. Browser login is interactive fallback only.
 ---
-# @runapi.ai/runway - RunAPI.ai Runway video generation
 
-Build Node / TypeScript integrations that generate videos, extend existing Runway tasks, or transform videos with Aleph through RunAPI.ai.
+# Runway on RunAPI
 
-## Setup
+Generate and edit video with Runway through RunAPI. The default path for one-off agent tasks is the `runapi` CLI; SDKs are for application integration.
 
-Requires **Node 18+** (global `fetch`).
+## Routing decision
 
-```bash
-npm install @runapi.ai/runway
+- One-off generation, editing, or transformation for the user → use the **CLI path** with the `runapi` binary.
+- Building an app, backend, worker, library, or production codebase → use the **SDK integration path**.
+
+## CLI path
+
+The `runapi` binary is the runtime dependency. Run `runapi auth status` first. For agents and headless runs, prefer `RUNAPI_API_KEY` or import it into saved config with `printf '%s' "$RUNAPI_API_KEY" | runapi auth import-token --token -`. Use `runapi login` only when the user explicitly wants interactive browser auth.
+
+Inspect the available actions and request fields with CLI help:
+
+```shell
+runapi runway --help
+runapi runway text-to-video --help
 ```
 
-```dotenv
-# .env
-RUNAPI_API_KEY=runapi_xxx   # get one at https://runapi.ai/settings/api_keys
+Run a one-off task (synchronous — polls until the task completes):
+
+```shell
+runapi runway text-to-video --input-file request.json
 ```
 
-```ts
-import { RunwayClient } from '@runapi.ai/runway';
+Submit asynchronously and poll separately:
 
-const client = new RunwayClient();
+```shell
+runapi runway text-to-video --async --input-file request.json
+runapi wait <task-id> --service runway --action text-to-video
 ```
 
-Pass `{ apiKey }` explicitly if you manage secrets differently. `baseUrl` defaults to `https://runapi.ai`; override only for local development.
+Available actions: `text-to-video`, `extend-video`.
 
-## Resources
+## SDK integration path
 
-All resources use the async task contract:
+When integrating Runway into an app, backend, worker, or library — not for one-off tasks — use a RunAPI SDK package:
 
-```ts
-const { id } = await client.generations.create({ ... });
-const status = await client.generations.get(id);
-const result = await client.generations.run({ ... });
-```
+- JavaScript / TypeScript: `@runapi.ai/runway`
+- Ruby: `runapi-runway`
+- Go: `github.com/runapi-ai/runway-sdk/go`
 
-Available resources:
+## References
 
-| Resource | Endpoint | Use for |
-|---|---|---|
-| `client.generations` | `/api/v1/runway/generations` | Text-to-video and image-to-video |
-| `client.extensions` | `/api/v1/runway/extensions` | Continue an existing Runway task |
-| `client.alephGenerations` | `/api/v1/runway/aleph_generations` | Video-to-video Aleph transforms |
+- Model overview, pricing, and rate limits: https://runapi.ai/models/runway.md
+- Provider comparison: https://runapi.ai/providers/runway.md
+- Full model catalog: https://runapi.ai/models.md
 
-## Generate video
-
-```ts
-const result = await client.generations.run({
-  prompt: 'A handheld shot of a red fox crossing a snowy road at dusk',
-  duration: 5,
-  quality: '720p',
-  aspect_ratio: '16:9',
-});
-
-const url = result.videos[0].url;
-```
-
-For image-to-video, add `image_url`.
-
-## Extend video
-
-```ts
-const result = await client.extensions.run({
-  task_id: 'task-id',
-  prompt: 'Continue the camera move into a wide landscape reveal',
-  image_url: 'https://raw.githubusercontent.com/github/explore/main/topics/python/python.png',
-  quality: '720p',
-});
-```
-
-## Aleph transform
-
-```ts
-const result = await client.alephGenerations.run({
-  prompt: 'Turn the scene into a warm watercolor animation',
-  video_url: 'https://raw.githubusercontent.com/mediaelement/mediaelement-files/master/big_buck_bunny.mp4',
-  aspect_ratio: '16:9',
-});
-```
-
-## Key params
-
-- `duration`: `5` or `10` for generations.
-- `quality`: `720p` or `1080p` for generations and extensions.
-- `aspect_ratio`: `16:9`, `9:16`, `1:1`, `4:3`, or `3:4`; Aleph also supports `21:9`.
-- `watermark`: Optional watermark text.
-- `callback_url`: Optional webhook URL for async completion.
-
-## Errors
-
-Runway methods throw the standard RunAPI error classes. For long-running tasks, prefer `create()` plus webhook or `get(id)` in request handlers, and reserve `run()` for jobs / CLI.
-
-## RunAPI public routing
-
-runway api public links use the API-379 catalog route map. The main runway api page is https://runapi.ai/models/runway. SDK docs live at https://runapi.ai/docs#sdk-runway and product docs live at https://runapi.ai/docs#runway.
-
-Pricing, rate limits, and commercial usage for runway api should point to the most specific variant page:
-- [Runway tools](https://runapi.ai/models/runway)
-
-Compare Runway with other Runway models at https://runapi.ai/providers/runway. Browse every RunAPI model and skill at https://runapi.ai/models. SDK repository: https://github.com/runapi-ai/runway-sdk. Skill repository: https://github.com/runapi-ai/runway.

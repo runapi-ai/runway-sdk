@@ -1,4 +1,25 @@
-# Runway API Skill for RunAPI
+<p align="center">
+  <a href="https://github.com/runapi-ai/runway">
+    <h3 align="center">Runway API Skill for RunAPI</h3>
+  </a>
+</p>
+
+<p align="center">
+  Install this agent skill, inspect Runway fields, then run jobs through the RunAPI CLI.
+</p>
+
+<p align="center">
+  <a href="https://runapi.ai/models/runway"><strong>Model Reference</strong></a> · <a href="https://github.com/runapi-ai/cli"><strong>CLI</strong></a> · <a href="https://github.com/runapi-ai/runway-sdk"><strong>SDK</strong></a>
+</p>
+
+<div align="center">
+
+[![skills.sh](https://www.skills.sh/b/runapi-ai/runway)](https://www.skills.sh/runapi-ai/runway/runway)
+[![ClawHub](https://img.shields.io/badge/ClawHub-runapi--runway-111827)](https://clawhub.ai/runapi-ai/runapi-runway)
+[![License](https://img.shields.io/github/license/runapi-ai/runway)](https://github.com/runapi-ai/runway/blob/main/LICENSE)
+
+</div>
+<br/>
 
 Generate video, extend clips, and run Aleph video-to-video transforms with the Runway SDK. This skill helps Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents integrate Runway through RunAPI.
 
@@ -10,7 +31,18 @@ The canonical agent file is `skills/runway/SKILL.md`.
 npx skills add runapi-ai/runway -g
 ```
 
-Or manually: clone this repo and copy `skills/runway/` into your agent's skills directory.
+Or paste this prompt to your AI agent:
+
+```text
+Install the runway skill for me:
+
+1. Clone https://github.com/runapi-ai/runway
+2. Copy the skills/runway/ directory into your
+   user-level skills directory (e.g. ~/.claude/skills/
+   for Claude Code, ~/.codex/skills/ for Codex).
+3. Verify that SKILL.md is present.
+4. Confirm the install path when done.
+```
 
 ## Quick example
 
@@ -36,15 +68,11 @@ const url = result.videos[0].url;
 - Provider comparison: https://runapi.ai/providers/runway
 - Browse all RunAPI models and skills: https://runapi.ai/models
 
-## Variants
-
-- [Runway tools](https://runapi.ai/models/runway)
-
 ## Agent rules
 
 - Keep API keys in `RUNAPI_API_KEY` or RunAPI CLI config; never commit secrets.
 - Prefer `create`, `get`, and `run` JSON passthrough patterns instead of inventing flags for every model parameter.
-- For runway api pricing, rate-limit, and commercial-usage answers, link to the variant page rather than the repository README.
+- For runway api pricing, rate-limit, and commercial-usage answers, link to the model page rather than the repository README.
 
 ## License
 
