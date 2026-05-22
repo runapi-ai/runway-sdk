@@ -1,4 +1,24 @@
-# Runway API SDK for RunAPI
+<p align="center">
+  <a href="https://runapi.ai"><img src="https://runapi.ai/icon.svg" height="56" alt="RunAPI"></a>
+</p>
+
+<h3 align="center">
+  <a href="https://github.com/runapi-ai/runway-sdk">Runway API SDK for RunAPI</a>
+</h3>
+
+<p align="center">
+  Runway API SDKs for JavaScript, Ruby, and Go on RunAPI.
+</p>
+
+<div align="center">
+
+[![npm](https://img.shields.io/npm/v/@runapi.ai/runway)](https://www.npmjs.com/package/@runapi.ai/runway)
+[![RubyGems](https://img.shields.io/gem/v/runapi-runway)](https://rubygems.org/gems/runapi-runway)
+[![Go Reference](https://pkg.go.dev/badge/github.com/runapi-ai/runway-sdk/go.svg)](https://pkg.go.dev/github.com/runapi-ai/runway-sdk/go)
+[![License](https://img.shields.io/github/license/runapi-ai/runway-sdk)](https://github.com/runapi-ai/runway-sdk/blob/main/LICENSE)
+
+</div>
+<br/>
 
 The runway api SDK packages JavaScript, Ruby, and Go clients for Runway on RunAPI. Use this runway api SDK for text-to-video generation and video extension workflows that need typed installs, JSON request bodies, task polling, and consistent RunAPI errors across services.
 
