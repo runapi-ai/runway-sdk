@@ -21,7 +21,7 @@
 </div>
 <br/>
 
-Generate video, extend clips, and run Aleph video-to-video transforms with the Runway SDK. This skill helps Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents integrate Runway through RunAPI.
+Generate video, extend clips, and edit videos with the Runway SDK. This skill helps Claude Code, Codex, Gemini CLI, Cursor, and 50+ agents integrate Runway through RunAPI.
 
 The canonical agent file is `skills/runway/SKILL.md`.
 
@@ -50,9 +50,10 @@ Install the runway skill for me:
 import { RunwayClient } from '@runapi.ai/runway';
 
 const client = new RunwayClient();
-const result = await client.generations.run({
+const result = await client.textToVideo.run({
   prompt: 'A handheld shot of a red fox crossing a snowy road',
-  duration: 5,
+  output_resolution: '720p',
+  duration_seconds: 5,
   aspect_ratio: '16:9',
 });
 const url = result.videos[0].url;

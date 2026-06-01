@@ -1,9 +1,10 @@
 export { RunwayClient } from './client';
 export type {
-  RunwayQuality,
+  RunwayOutputResolution,
   RunwayAspectRatio,
   RunwayDuration,
   Video,
+  Image,
   TaskCreateResponse,
   RunwayTaskResponse,
   CompletedRunwayTaskResponse,

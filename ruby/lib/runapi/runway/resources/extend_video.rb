@@ -32,11 +32,10 @@ module RunApi
         private
 
         def validate_params!(params)
-          raise Core::ValidationError, "task_id is required" unless param(params, :task_id)
+          raise Core::ValidationError, "source_task_id is required" unless param(params, :source_task_id)
           raise Core::ValidationError, "prompt is required" unless param(params, :prompt)
-          raise Core::ValidationError, "image_url is required" unless param(params, :image_url)
-          raise Core::ValidationError, "quality is required" unless param(params, :quality)
-          validate_optional!(params, :quality, Types::QUALITIES)
+          raise Core::ValidationError, "output_resolution is required" unless param(params, :output_resolution)
+          validate_optional!(params, :output_resolution, Types::OUTPUT_RESOLUTIONS)
         end
       end
     end

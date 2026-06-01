@@ -1,14 +1,14 @@
 package runway
 
-type RunwayQuality string
+type RunwayOutputResolution string
 
 type RunwayAspectRatio string
 
 type TaskStatus string
 
 const (
-	Quality720p  RunwayQuality = "720p"
-	Quality1080p RunwayQuality = "1080p"
+	OutputResolution720p  RunwayOutputResolution = "720p"
+	OutputResolution1080p RunwayOutputResolution = "1080p"
 )
 
 const (
@@ -20,22 +20,21 @@ const (
 )
 
 type TextToVideoParams struct {
-	Prompt      string            `json:"prompt" help:"required; video description"`
-	Duration    int               `json:"duration" help:"required; 5 or 10 seconds"`
-	Quality     RunwayQuality     `json:"quality" help:"required; 720p or 1080p"`
-	ImageURL    string            `json:"image_url,omitempty" help:"optional; image-to-video source URL"`
-	AspectRatio RunwayAspectRatio `json:"aspect_ratio,omitempty" help:"optional; required for text-to-video; 16:9, 9:16, 1:1, 4:3, 3:4"`
-	Watermark   string            `json:"watermark,omitempty" help:"optional; watermark text"`
-	CallbackURL string            `json:"callback_url,omitempty" help:"optional; webhook URL"`
+	Prompt             string                 `json:"prompt" help:"required; video description"`
+	DurationSeconds    int                    `json:"duration_seconds" help:"required; duration in seconds"`
+	OutputResolution   RunwayOutputResolution `json:"output_resolution" help:"required; output resolution"`
+	FirstFrameImageURL string                 `json:"first_frame_image_url,omitempty" help:"optional; first frame image URL for image-to-video"`
+	AspectRatio        RunwayAspectRatio      `json:"aspect_ratio,omitempty" help:"optional; output aspect ratio"`
+	Watermark          string                 `json:"watermark,omitempty" help:"optional; watermark text"`
+	CallbackURL        string                 `json:"callback_url,omitempty" help:"optional; webhook URL"`
 }
 
 type ExtendVideoParams struct {
-	TaskID      string        `json:"task_id" help:"required; source task ID to extend"`
-	Prompt      string        `json:"prompt" help:"required; extension description"`
-	ImageURL    string        `json:"image_url" help:"required; image URL from the source task cover frame"`
-	Quality     RunwayQuality `json:"quality" help:"required; 720p or 1080p"`
-	Watermark   string        `json:"watermark,omitempty" help:"optional; watermark text"`
-	CallbackURL string        `json:"callback_url,omitempty" help:"optional; webhook URL"`
+	SourceTaskID     string                 `json:"source_task_id" help:"required; source task ID to extend"`
+	Prompt           string                 `json:"prompt" help:"required; extension description"`
+	OutputResolution RunwayOutputResolution `json:"output_resolution" help:"required; output resolution"`
+	Watermark        string                 `json:"watermark,omitempty" help:"optional; watermark text"`
+	CallbackURL      string                 `json:"callback_url,omitempty" help:"optional; webhook URL"`
 }
 
 type AsyncTaskResponse struct {
@@ -53,9 +52,13 @@ type Video struct {
 	URL string `json:"url"`
 }
 
+type Image struct {
+	URL string `json:"url"`
+}
+
 type TaskResponse struct {
 	AsyncTaskResponse
 	Videos       []Video `json:"videos,omitempty"`
-	ImageURL     string  `json:"image_url,omitempty"`
-	ParentTaskID string  `json:"parent_task_id,omitempty"`
+	Images       []Image `json:"images,omitempty"`
+	SourceTaskID string  `json:"source_task_id,omitempty"`
 }

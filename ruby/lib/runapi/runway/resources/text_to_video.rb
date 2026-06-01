@@ -33,9 +33,9 @@ module RunApi
 
         def validate_params!(params)
           raise Core::ValidationError, "prompt is required" unless param(params, :prompt)
-          raise Core::ValidationError, "duration is required" unless param(params, :duration)
-          raise Core::ValidationError, "quality is required" unless param(params, :quality)
-          validate_optional!(params, :quality, Types::QUALITIES)
+          raise Core::ValidationError, "duration_seconds is required" unless param(params, :duration_seconds)
+          raise Core::ValidationError, "output_resolution is required" unless param(params, :output_resolution)
+          validate_optional!(params, :output_resolution, Types::OUTPUT_RESOLUTIONS)
           validate_optional!(params, :aspect_ratio, Types::ASPECT_RATIOS)
         end
       end
