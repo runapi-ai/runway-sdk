@@ -3,6 +3,8 @@
 module RunApi
   module Runway
     module Resources
+      # Runway text-to-video resource.
+      # Generate video from a text prompt, optionally using a first-frame image for image-to-video generation.
       class TextToVideo
         include RunApi::Core::ResourceHelpers
 
@@ -14,17 +16,35 @@ module RunApi
           @http = http
         end
 
+        # Create a text-to-video task and wait until complete.
+        #
+        # @param prompt [String] video description prompt
+        # @param duration_seconds [Integer] video length: 5 or 10
+        # @param output_resolution [String] "720p" or "1080p"
+        # @param first_frame_image_url [String, nil] opening frame image URL for image-to-video
+        # @param aspect_ratio [String, nil] only for pure text-to-video (no first-frame image)
+        # @param watermark [String, nil] watermark text burned into the output
+        # @param callback_url [String, nil] webhook URL for completion notification
+        # @return [RunApi::Runway::Types::CompletedTaskResponse] completed task with videos
         def run(**params)
           task = create(**params)
           poll_until_complete { get(task.id) }
         end
 
+        # Create a text-to-video task without waiting for completion.
+        #
+        # @param params [Hash] text-to-video parameters (see {#run} for details)
+        # @return [RunApi::Runway::Types::TaskCreateResponse] task creation result with id
         def create(**params)
           params = compact_params(params)
           validate_params!(params)
           request(:post, ENDPOINT, body: params)
         end
 
+        # Get text-to-video task status by task ID.
+        #
+        # @param id [String] task ID
+        # @return [RunApi::Runway::Types::TaskResponse] current task status
         def get(id)
           request(:get, "#{ENDPOINT}/#{id}")
         end

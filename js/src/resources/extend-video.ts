@@ -5,9 +5,16 @@ import type { CompletedRunwayTaskResponse, ExtendVideoParams, RunwayTaskResponse
 
 const ENDPOINT = '/api/v1/runway/extend_video';
 
+/** Append additional footage to a previously generated video, continuing from where the source task left off. */
 export class ExtendVideo {
   constructor(private readonly http: HttpClient) {}
 
+  /**
+   * Create an extend video task and wait until complete.
+   * @param params Extend video parameters.
+   * @param options Per-request and polling overrides.
+   * @returns The completed extend video response.
+   */
   async run(params: ExtendVideoParams, options?: RequestOptions & PollingOptions): Promise<CompletedRunwayTaskResponse> {
     const { id } = await this.create(params, options);
     const response = await pollUntilComplete<RunwayTaskResponse>(() => this.get(id, options), {
@@ -17,10 +24,22 @@ export class ExtendVideo {
     return response as CompletedRunwayTaskResponse;
   }
 
+  /**
+   * Create an extend video task; returns immediately with a task id.
+   * @param params Extend video parameters.
+   * @param options Per-request overrides.
+   * @returns The task creation result.
+   */
   async create(params: ExtendVideoParams, options?: RequestOptions): Promise<TaskCreateResponse> {
     return this.http.request<TaskCreateResponse>('POST', ENDPOINT, { body: compactParams(params), ...options });
   }
 
+  /**
+   * Fetch the current status of an extend video task.
+   * @param id The task id.
+   * @param options Per-request overrides.
+   * @returns The current extend video task status.
+   */
   async get(id: string, options?: RequestOptions): Promise<RunwayTaskResponse> {
     return this.http.request<RunwayTaskResponse>('GET', `${ENDPOINT}/${id}`, options ?? {});
   }
