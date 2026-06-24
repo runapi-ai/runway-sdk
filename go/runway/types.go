@@ -29,6 +29,7 @@ const (
 // Set FirstFrameImageURL to use an image as the opening frame (image-to-video mode).
 // OutputResolution is required; AspectRatio is only used for pure text-to-video (no first frame image).
 type TextToVideoParams struct {
+	Model              string                 `json:"model" help:"required; model slug"`
 	Prompt             string                 `json:"prompt" help:"required; video description"`
 	DurationSeconds    int                    `json:"duration_seconds" help:"required; duration in seconds"`
 	OutputResolution   RunwayOutputResolution `json:"output_resolution" help:"required; output resolution"`
@@ -42,6 +43,7 @@ type TextToVideoParams struct {
 // SourceTaskID must reference a completed TextToVideo or ExtendVideo task.
 // OutputResolution must match the resolution of the source task.
 type ExtendVideoParams struct {
+	Model            string                 `json:"model" help:"required; model slug"`
 	SourceTaskID     string                 `json:"source_task_id" help:"required; source task ID to extend"`
 	Prompt           string                 `json:"prompt" help:"required; extension description"`
 	OutputResolution RunwayOutputResolution `json:"output_resolution" help:"required; output resolution"`

@@ -1,9 +1,13 @@
-import type { HttpClient, PollingOptions, RequestOptions } from '@runapi.ai/core';
-import { compactParams } from '@runapi.ai/core';
+import type { ActionSchema, HttpClient, PollingOptions, RequestOptions } from '@runapi.ai/core';
+import { compactParams, validateParams } from '@runapi.ai/core';
 import { pollUntilComplete } from '@runapi.ai/core/internal';
+import { contract } from '../contract_gen';
 import type { CompletedRunwayTaskResponse, ExtendVideoParams, RunwayTaskResponse, TaskCreateResponse } from '../types';
 
 const ENDPOINT = '/api/v1/runway/extend_video';
+
+// Fixed endpoint model, injected only for contract validation (never sent on the wire).
+const MODEL = 'runway';
 
 /** Append additional footage to a previously generated video, continuing from where the source task left off. */
 export class ExtendVideo {
@@ -31,7 +35,9 @@ export class ExtendVideo {
    * @returns The task creation result.
    */
   async create(params: ExtendVideoParams, options?: RequestOptions): Promise<TaskCreateResponse> {
-    return this.http.request<TaskCreateResponse>('POST', ENDPOINT, { body: compactParams(params), ...options });
+    const body = compactParams(params);
+    validateParams(contract['extend-video'] as ActionSchema, { ...body, model: MODEL } as Record<string, unknown>);
+    return this.http.request<TaskCreateResponse>('POST', ENDPOINT, { body, ...options });
   }
 
   /**

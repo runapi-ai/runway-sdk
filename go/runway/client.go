@@ -20,6 +20,25 @@ const (
 	extendVideoPath = "/api/v1/runway/extend_video"
 )
 
+// Each endpoint targets a fixed model that is not sent on the wire, so the
+// model is injected only into a validation copy of the request body.
+const (
+	textToVideoModel = "runway"
+	extendVideoModel = "runway"
+)
+
+// validateAction validates a compacted request body against one contract
+// action, injecting the endpoint's fixed model (never posted) so contract
+// model-membership and per-field checks apply.
+func validateAction(action, model string, body map[string]any) error {
+	withModel := make(map[string]any, len(body)+1)
+	for key, value := range body {
+		withModel[key] = value
+	}
+	withModel["model"] = model
+	return core.ValidateParams(contractSchema[action], withModel)
+}
+
 // Client provides Runway video generation and extension operations.
 type Client struct {
 	base.Base
@@ -61,7 +80,11 @@ type ExtendVideo struct{ http core.HTTPClient }
 // Create submits a text-to-video task and returns immediately with a task id.
 func (r *TextToVideo) Create(ctx context.Context, params TextToVideoParams, opts ...option.RequestOption) (*core.TaskCreateResponse, error) {
 	requestOptions, _ := option.ResolveRequestOptions(opts...)
-	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, textToVideoPath, core.CompactParams(params), requestOptions)
+	body := core.CompactParams(params)
+	if err := validateAction("text-to-video", textToVideoModel, body); err != nil {
+		return nil, err
+	}
+	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, textToVideoPath, body, requestOptions)
 }
 
 // Get fetches the current status of a text-to-video task by id.
@@ -83,7 +106,11 @@ func (r *TextToVideo) Run(ctx context.Context, params TextToVideoParams, opts ..
 // Create submits a video-extension task and returns immediately with a task id.
 func (r *ExtendVideo) Create(ctx context.Context, params ExtendVideoParams, opts ...option.RequestOption) (*core.TaskCreateResponse, error) {
 	requestOptions, _ := option.ResolveRequestOptions(opts...)
-	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, extendVideoPath, core.CompactParams(params), requestOptions)
+	body := core.CompactParams(params)
+	if err := validateAction("extend-video", extendVideoModel, body); err != nil {
+		return nil, err
+	}
+	return core.PostJSON[core.TaskCreateResponse](ctx, r.http, extendVideoPath, body, requestOptions)
 }
 
 // Get fetches the current status of a video-extension task by id.

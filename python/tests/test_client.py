@@ -90,6 +90,8 @@ def test_create_posts_compacted_body():
             },
         ),
     ]
+    _, _, body = fake.calls[0]
+    assert "model" not in body
     assert isinstance(result, TaskCreateResponse)
 
 
@@ -112,9 +114,15 @@ def test_extend_video_create_posts_compacted_body():
         (
             "post",
             "/api/v1/runway/extend_video",
-            {"source_task_id": "t1", "prompt": "keep going", "output_resolution": "1080p"},
+            {
+                "source_task_id": "t1",
+                "prompt": "keep going",
+                "output_resolution": "1080p",
+            },
         ),
     ]
+    _, _, body = fake.calls[0]
+    assert "model" not in body
 
 
 def test_run_narrows_completed_type():
@@ -124,7 +132,10 @@ def test_run_narrows_completed_type():
     )
     client = RunwayClient(api_key="k", http_client=fake)
     result = client.text_to_video.run(
-        prompt="a serene lake", duration_seconds=5, output_resolution="720p"
+        model="runway",
+        prompt="a serene lake",
+        duration_seconds=5,
+        output_resolution="720p",
     )
     assert isinstance(result, CompletedTaskResponse)
     assert result.videos[0].url == "https://x/y.mp4"
@@ -136,33 +147,40 @@ def test_run_narrows_completed_type():
 def test_text_to_video_requires_prompt():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="prompt is required"):
-        client.text_to_video.create(duration_seconds=5, output_resolution="720p")
+        client.text_to_video.create(
+            model="runway", duration_seconds=5, output_resolution="720p"
+        )
 
 
 def test_text_to_video_requires_duration_seconds():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="duration_seconds is required"):
-        client.text_to_video.create(prompt="hi there", output_resolution="720p")
+        client.text_to_video.create(
+            model="runway", prompt="hi there", output_resolution="720p"
+        )
 
 
 def test_text_to_video_requires_output_resolution():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="output_resolution is required"):
-        client.text_to_video.create(prompt="hi there", duration_seconds=5)
+        client.text_to_video.create(model="runway", prompt="hi there", duration_seconds=5)
 
 
 def test_text_to_video_rejects_invalid_output_resolution():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="Invalid output_resolution"):
+    with pytest.raises(ValidationError, match="output_resolution must be one of: 720p, 1080p"):
         client.text_to_video.create(
-            prompt="hi there", duration_seconds=5, output_resolution="480p"
+            model="runway", prompt="hi there", duration_seconds=5, output_resolution="480p"
         )
 
 
 def test_text_to_video_rejects_invalid_aspect_ratio():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="Invalid aspect_ratio"):
+    with pytest.raises(
+        ValidationError, match="aspect_ratio must be one of: 16:9, 9:16, 1:1, 4:3, 3:4"
+    ):
         client.text_to_video.create(
+            model="runway",
             prompt="hi there",
             duration_seconds=5,
             output_resolution="720p",
@@ -173,16 +191,20 @@ def test_text_to_video_rejects_invalid_aspect_ratio():
 def test_extend_video_requires_source_task_id():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="source_task_id is required"):
-        client.extend_video.create(prompt="hi there", output_resolution="720p")
+        client.extend_video.create(
+            model="runway", prompt="hi there", output_resolution="720p"
+        )
 
 
 def test_extend_video_requires_prompt():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="prompt is required"):
-        client.extend_video.create(source_task_id="t1", output_resolution="720p")
+        client.extend_video.create(
+            model="runway", source_task_id="t1", output_resolution="720p"
+        )
 
 
 def test_extend_video_requires_output_resolution():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="output_resolution is required"):
-        client.extend_video.create(source_task_id="t1", prompt="hi there")
+        client.extend_video.create(model="runway", source_task_id="t1", prompt="hi there")

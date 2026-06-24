@@ -51,6 +51,8 @@ export type CompletedRunwayTaskResponse = RunwayTaskResponse & {
  * is provided, aspect_ratio is ignored (inferred from the image).
  */
 export interface TextToVideoParams {
+  /** Model slug. */
+  model: string;
   /** Video description prompt. */
   prompt: string;
   /** Video length in seconds. */
@@ -72,6 +74,8 @@ export interface TextToVideoParams {
  * output_resolution must match the resolution of the source task.
  */
 export interface ExtendVideoParams {
+  /** Model slug. */
+  model: string;
   /** Task ID of the completed TextToVideo or ExtendVideo task to continue from. */
   source_task_id: string;
   /** Prompt describing the continuation footage. */

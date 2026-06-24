@@ -4,13 +4,6 @@ module RunApi
   module Runway
     # Type definitions and constants for Runway Gen-4 video generation.
     module Types
-      # Output resolution. 720p (1280x720) is faster and lower cost;
-      # 1080p (1920x1080) produces higher detail at higher cost.
-      OUTPUT_RESOLUTIONS = %w[720p 1080p].freeze
-
-      # Aspect ratio for pure text-to-video. Ignored when a first-frame image is provided.
-      ASPECT_RATIOS = %w[16:9 9:16 1:1 4:3 3:4].freeze
-
       # A generated video file with a download URL.
       class Video < RunApi::Core::BaseModel
         optional :id, String

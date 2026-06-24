@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
-from runapi.core import Resource, ValidationError
+from runapi.core import Resource
 
+from ..contract_gen import CONTRACT
 from ..types import (
-    OUTPUT_RESOLUTIONS,
     CompletedTaskResponse,
     TaskCreateResponse,
 )
@@ -20,6 +20,8 @@ class ExtendVideo(Resource):
 
     RESPONSE_CLASS = TaskCreateResponse
     COMPLETED_RESPONSE_CLASS = CompletedTaskResponse
+
+    MODEL = "runway"
 
     def run(self, **params: Any) -> Any:
         """Append footage to a previous video and poll until it completes.
@@ -43,7 +45,7 @@ class ExtendVideo(Resource):
             The task creation result with an id.
         """
         compacted = self._compact_params(params)
-        self._validate_params(compacted)
+        self._validate_contract(CONTRACT["extend-video"], {**compacted, "model": self.MODEL})
         return self._request("post", self.ENDPOINT, body=compacted)
 
     def get(self, id: str) -> Any:
@@ -56,12 +58,3 @@ class ExtendVideo(Resource):
             The current task status.
         """
         return self._request("get", f"{self.ENDPOINT}/{id}")
-
-    def _validate_params(self, params: Dict[str, Any]) -> None:
-        if not params.get("source_task_id"):
-            raise ValidationError("source_task_id is required")
-        if not params.get("prompt"):
-            raise ValidationError("prompt is required")
-        if not params.get("output_resolution"):
-            raise ValidationError("output_resolution is required")
-        self._validate_optional(params, "output_resolution", OUTPUT_RESOLUTIONS)

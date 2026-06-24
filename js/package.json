@@ -1,7 +1,10 @@
 {
   "name": "@runapi.ai/runway",
+  "runapi": {
+    "slug": "runway"
+  },
   "version": "0.2.7",
-  "description": "RunAPI Runway SDK for JavaScript, Ruby, and Go",
+  "description": "RunAPI Runway SDK for text-to-video and video extension workflows in JavaScript, Python, Ruby, Go, and Java",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -48,7 +51,15 @@
     "sdk",
     "typescript",
     "ruby",
-    "golang"
+    "golang",
+    "java",
+    "python",
+    "maven",
+    "gradle",
+    "video-generation",
+    "text-to-video",
+    "video-api",
+    "runway-api"
   ],
   "author": "RunAPI",
   "license": "Apache-2.0",

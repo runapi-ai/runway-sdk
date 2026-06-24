@@ -11,6 +11,7 @@ module RunApi
         ENDPOINT = "/api/v1/runway/text_to_video"
         RESPONSE_CLASS = Types::TaskCreateResponse
         COMPLETED_RESPONSE_CLASS = Types::CompletedTaskResponse
+        MODEL = "runway"
 
         def initialize(http)
           @http = http
@@ -37,7 +38,7 @@ module RunApi
         # @return [RunApi::Runway::Types::TaskCreateResponse] task creation result with id
         def create(**params)
           params = compact_params(params)
-          validate_params!(params)
+          validate_contract!(CONTRACT["text-to-video"], params.merge(model: MODEL))
           request(:post, ENDPOINT, body: params)
         end
 
@@ -47,16 +48,6 @@ module RunApi
         # @return [RunApi::Runway::Types::TaskResponse] current task status
         def get(id)
           request(:get, "#{ENDPOINT}/#{id}")
-        end
-
-        private
-
-        def validate_params!(params)
-          raise Core::ValidationError, "prompt is required" unless param(params, :prompt)
-          raise Core::ValidationError, "duration_seconds is required" unless param(params, :duration_seconds)
-          raise Core::ValidationError, "output_resolution is required" unless param(params, :output_resolution)
-          validate_optional!(params, :output_resolution, Types::OUTPUT_RESOLUTIONS)
-          validate_optional!(params, :aspect_ratio, Types::ASPECT_RATIOS)
         end
       end
     end

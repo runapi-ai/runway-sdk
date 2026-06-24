@@ -46,6 +46,9 @@ func TestTextToVideoCreate(t *testing.T) {
 	if body["first_frame_image_url"] != "https://cdn.runapi.ai/public/samples/first-frame.png" {
 		t.Fatalf("unexpected first_frame_image_url: %v", body)
 	}
+	if _, ok := body["model"]; ok {
+		t.Fatalf("expected request body to omit model key: %v", body)
+	}
 	if _, ok := body["image_url"]; ok {
 		t.Fatalf("unexpected image_url: %v", body)
 	}
@@ -67,6 +70,9 @@ func TestExtendVideoCreate(t *testing.T) {
 	body := stub.body.(map[string]any)
 	if body["source_task_id"] != "src-1" || body["output_resolution"] != string(OutputResolution720p) {
 		t.Fatalf("unexpected body: %v", body)
+	}
+	if _, ok := body["model"]; ok {
+		t.Fatalf("expected request body to omit model key: %v", body)
 	}
 	if _, ok := body["task_id"]; ok {
 		t.Fatalf("unexpected task_id: %v", body)
