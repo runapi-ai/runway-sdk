@@ -1,8 +1,8 @@
 # Runway Python SDK for RunAPI
 
-The Runway Python SDK is the language-specific package for Runway on RunAPI. Use this runway package for text-to-video and extend-video flows when your application needs JSON request bodies, task status lookup, and consistent RunAPI errors in Python.
+The Runway Python SDK is the language-specific package for Runway on RunAPI. Use this package for video generation, animation, and video editing workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Python.
 
-This runway README is the Python package guide inside the public `runway-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/runway; for API reference, use https://runapi.ai/docs#runway; for SDK docs, use https://runapi.ai/docs#sdk-runway.
+This README is the Python package guide inside the public `runway-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/runway; for API reference, use https://runapi.ai/docs#runway; for SDK docs, use https://runapi.ai/docs#sdk-runway.
 
 ## Install
 

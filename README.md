@@ -7,7 +7,7 @@
 </h3>
 
 <p align="center">
-  Runway API SDKs for JavaScript, Python, Ruby, Go, and Java on RunAPI.
+  Runway API SDKs for JavaScript, Python, Ruby, Go, Java, and PHP on RunAPI.
 </p>
 
 <div align="center">
@@ -22,9 +22,9 @@
 </div>
 <br/>
 
-The Runway API SDK packages JavaScript, Python, Ruby, Go, and Java clients for Runway on RunAPI. Use it for text-to-video and video extension workflows when your app needs typed request builders, predictable task polling, file upload helpers, account helpers, and consistent RunAPI errors.
+The Runway API SDK packages JavaScript, Python, Ruby, Go, Java, and PHP clients for Runway on RunAPI. Use it for text-to-video and video extension workflows when your app needs typed request builders, predictable task polling, file upload helpers, account helpers, and consistent RunAPI errors.
 
-Runway is listed in the RunAPI model catalog at https://runapi.ai/models/runway. Variant pages below carry pricing, rate-limit, and commercial-usage details. The public `runway-sdk` repository groups the language packages, examples, CI, and release tags for this model.
+Runway is listed in the RunAPI model catalog at https://runapi.ai/models/runway. Variant pages below carry pricing, rate-limit, and commercial-usage details. The public `runway-sdk` repository groups the non-PHP language packages, examples, CI, and release tags for this model. The PHP package is released from a split Composer repository.
 
 ## Install
 
@@ -61,6 +61,8 @@ dependencies {
   implementation("ai.runapi:runapi-runway")
 }
 ```
+
+The PHP package is published from the split Composer repository as `runapi-ai/runway`; see https://github.com/runapi-ai/runway-php for PHP install and examples.
 
 ## What you can build
 
@@ -113,6 +115,7 @@ Most media endpoints are asynchronous. `create()` submits a task and returns its
 - SDK docs: https://runapi.ai/docs#sdk-runway
 - Product docs: https://runapi.ai/docs#runway
 - SDK repository: https://github.com/runapi-ai/runway-sdk
+- PHP package repository: https://github.com/runapi-ai/runway-php
 - Skill repository: https://github.com/runapi-ai/runway
 - Provider comparison: https://runapi.ai/providers/runway
 - Full catalog: https://runapi.ai/models
@@ -132,7 +135,7 @@ RunAPI-generated file URLs are temporary. Download and store generated images, v
 
 ### Which package should I install for Runway work?
 
-Install the model package for your language: `@runapi.ai/runway` on npm, `runapi-runway` on PyPI, `runapi-runway` on RubyGems, `github.com/runapi-ai/runway-sdk/go`, or `ai.runapi:runapi-runway`. Install core SDK packages only when you are building shared SDK infrastructure.
+Install the model package for your language: `@runapi.ai/runway` on npm, `runapi-runway` on PyPI, `runapi-runway` on RubyGems, `github.com/runapi-ai/runway-sdk/go`, `ai.runapi:runapi-runway` on Maven Central, or `runapi-ai/runway` on Packagist. Install core SDK packages only when you are building shared SDK infrastructure.
 
 ### Where should public links point?
 

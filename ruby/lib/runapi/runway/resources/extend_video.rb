@@ -25,27 +25,27 @@ module RunApi
         # @param watermark [String, nil] watermark text burned into the output
         # @param callback_url [String, nil] webhook URL for completion notification
         # @return [RunApi::Runway::Types::CompletedTaskResponse] completed task with videos
-        def run(**params)
-          task = create(**params)
-          poll_until_complete { get(task.id) }
+        def run(options: nil, **params)
+          task = create(options: options, **params)
+          poll_until_complete { get(task.id, options: options) }
         end
 
         # Create an extend-video task without waiting for completion.
         #
         # @param params [Hash] extend-video parameters (see {#run} for details)
         # @return [RunApi::Runway::Types::TaskCreateResponse] task creation result with id
-        def create(**params)
+        def create(options: nil, **params)
           params = compact_params(params)
           validate_contract!(CONTRACT["extend-video"], params.merge(model: MODEL))
-          request(:post, ENDPOINT, body: params)
+          request(:post, ENDPOINT, body: params, options: options)
         end
 
         # Get extend-video task status by task ID.
         #
         # @param id [String] task ID
         # @return [RunApi::Runway::Types::TaskResponse] current task status
-        def get(id)
-          request(:get, "#{ENDPOINT}/#{id}")
+        def get(id, options: nil)
+          request(:get, "#{ENDPOINT}/#{id}", options: options)
         end
       end
     end
