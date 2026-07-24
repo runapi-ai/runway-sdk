@@ -4,20 +4,22 @@ build-backend = "hatchling.build"
 
 [project]
 name = "runapi-runway"
-version = "0.1.0"
+version = "0.2.0"
 description = "RunAPI Runway SDK for text-to-video and video extension workflows in JavaScript, Python, Ruby, Go, Java, and PHP"
 readme = "README.md"
 requires-python = ">=3.9"
 license = "Apache-2.0"
 authors = [{ name = "RunAPI", email = "contact@runapi.ai" }]
 keywords = ["runapi", "runapi-ai", "runway", "api", "sdk", "typescript", "python", "ruby", "golang", "java", "maven", "gradle", "video-generation", "text-to-video", "video-api", "runway-api"]
-dependencies = ["runapi-core>=0.1.4"]
+dependencies = ["runapi-core>=0.3.0"]
 
 [project.urls]
 Homepage = "https://runapi.ai/models/runway"
 Documentation = "https://runapi.ai/docs#sdk-runway"
 Source = "https://github.com/runapi-ai/runway-sdk"
 Issues = "https://github.com/runapi-ai/runway-sdk/issues"
+Changelog = "https://github.com/runapi-ai/runway-sdk/blob/main/CHANGELOG.md"
+"Release Notes" = "https://github.com/runapi-ai/runway-sdk/releases/tag/python%2Fv0.2.0"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/runapi"]
