@@ -15,7 +15,7 @@ dependencies = ["runapi-core>=0.3.1"]
 
 [project.urls]
 Homepage = "https://runapi.ai/models/runway"
-Documentation = "https://runapi.ai/docs#sdk-runway"
+Documentation = "https://runapi.ai/docs/resources/sdks"
 Source = "https://github.com/runapi-ai/runway-sdk"
 Issues = "https://github.com/runapi-ai/runway-sdk/issues"
 Changelog = "https://github.com/runapi-ai/runway-sdk/blob/main/CHANGELOG.md"

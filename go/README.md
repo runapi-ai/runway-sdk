@@ -2,7 +2,7 @@
 
 The Runway Go SDK is the language-specific package for Runway on RunAPI. Use this package for video generation, animation, and video editing workflows when your application needs request bodies, task status lookup, and consistent RunAPI errors in Go.
 
-This README is the Go package guide inside the public `runway-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/runway; for API reference, use https://runapi.ai/docs#runway; for SDK docs, use https://runapi.ai/docs#sdk-runway.
+This README is the Go package guide inside the public `runway-sdk` repository. For the repository overview, start at `../README.md`; for model details, use https://runapi.ai/models/runway; for API reference, use https://runapi.ai/docs/api/runway/text-to-video; for SDK docs, use https://runapi.ai/docs/resources/sdks.
 
 ## Install
 
@@ -21,7 +21,7 @@ import (
 
 client, err := runway.NewClient()
 task, err := client.TextToVideo.Create(context.Background(), runway.TextToVideoParams{
-  // Pass the Runway JSON request body from https://runapi.ai/docs#runway.
+  // Pass the Runway JSON request body from https://runapi.ai/docs/api/runway/text-to-video.
 })
 status, err := client.TextToVideo.Get(context.Background(), task.ID)
 ```
@@ -37,8 +37,8 @@ Use the public Go module with `github.com/runapi-ai/core-sdk/go` options when bu
 ## Links
 
 - Model page: https://runapi.ai/models/runway
-- SDK docs: https://runapi.ai/docs#sdk-runway
-- Product docs: https://runapi.ai/docs#runway
+- SDK docs: https://runapi.ai/docs/resources/sdks
+- Product docs: https://runapi.ai/docs/api/runway/text-to-video
 - Pricing and rate limits: https://runapi.ai/models/runway
 - Provider comparison: https://runapi.ai/providers/runway
 - Full catalog: https://runapi.ai/models

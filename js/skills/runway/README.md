@@ -62,8 +62,8 @@ const url = result.videos[0].url;
 ## Routing
 
 - Model page: https://runapi.ai/models/runway
-- Product docs: https://runapi.ai/docs#runway
-- SDK docs: https://runapi.ai/docs#sdk-runway
+- Product docs: https://runapi.ai/docs/api/runway/text-to-video
+- SDK docs: https://runapi.ai/docs/resources/sdks
 - SDK repository: https://github.com/runapi-ai/runway-sdk
 - Pricing and rate limits: https://runapi.ai/models/runway
 - Provider comparison: https://runapi.ai/providers/runway
