@@ -3,7 +3,7 @@
   "runapi": {
     "slug": "runway"
   },
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "RunAPI Runway SDK for text-to-video and video extension workflows in JavaScript, Python, Ruby, Go, Java, and PHP",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -31,7 +31,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@runapi.ai/core": "^0.2.15"
+    "@runapi.ai/core": "^0.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

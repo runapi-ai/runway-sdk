@@ -1,6 +1,8 @@
 // Package runway provides the Runway Gen-4 video generation API client.
 package runway
 
+import "github.com/runapi-ai/core-sdk/go/core"
+
 // RunwayOutputResolution controls the output video resolution. Required for both TextToVideo and ExtendVideo.
 type RunwayOutputResolution string
 
@@ -53,6 +55,7 @@ type ExtendVideoParams struct {
 
 // AsyncTaskResponse carries the task ID, lifecycle status, and error for all Runway async operations.
 type AsyncTaskResponse struct {
+	core.TaskBillingFacts
 	ID     string     `json:"id"`
 	Status TaskStatus `json:"status"`
 	Error  string     `json:"error,omitempty"`

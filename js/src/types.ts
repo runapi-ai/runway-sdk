@@ -1,4 +1,4 @@
-import type { AsyncTaskStatus } from '@runapi.ai/core';
+import type { AsyncTaskStatus, TaskBillingResponse, TaskResponse } from '@runapi.ai/core';
 
 /** Output resolution. 720p (1280x720) is faster and lower cost; 1080p (1920x1080) produces higher detail at higher cost. */
 export type RunwayOutputResolution = '720p' | '1080p';
@@ -19,13 +19,13 @@ export interface Image {
 }
 
 /** Response returned when a task is first created, before polling begins. */
-export interface TaskCreateResponse {
+export interface TaskCreateResponse extends TaskBillingResponse {
   id: string;
   status?: AsyncTaskStatus;
 }
 
 /** Full task response returned by polling. Contains output media once the task completes. */
-export interface RunwayTaskResponse {
+export interface RunwayTaskResponse extends TaskResponse {
   id: string;
   status: AsyncTaskStatus;
   /** Generated video files, present when the task completes successfully. */
