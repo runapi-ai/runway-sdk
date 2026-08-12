@@ -40,7 +40,22 @@ module RunApi
               "required" => true
             }
           }
-        }
+        },
+        "rules" => [{
+          "when" => {
+            "first_frame_image_url" => {
+              "present" => false
+            }
+          },
+          "required" => ["aspect_ratio"]
+        }, {
+          "when" => {
+            "first_frame_image_url" => {
+              "present" => true
+            }
+          },
+          "forbidden" => ["aspect_ratio"]
+        }]
       }
     }.freeze
   end

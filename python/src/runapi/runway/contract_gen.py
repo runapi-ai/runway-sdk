@@ -36,6 +36,21 @@ CONTRACT = {
                     "required": True
                 }
             }
-        }
+        },
+        "rules": [{
+            "when": {
+                "first_frame_image_url": {
+                    "present": False
+                }
+            },
+            "required": ["aspect_ratio"]
+        }, {
+            "when": {
+                "first_frame_image_url": {
+                    "present": True
+                }
+            },
+            "forbidden": ["aspect_ratio"]
+        }]
     }
 }

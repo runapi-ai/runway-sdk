@@ -136,6 +136,7 @@ def test_run_narrows_completed_type():
         prompt="a serene lake",
         duration_seconds=5,
         output_resolution="720p",
+        aspect_ratio="16:9",
     )
     assert isinstance(result, CompletedTaskResponse)
     assert result.videos[0].url == "https://x/y.mp4"
@@ -148,7 +149,10 @@ def test_text_to_video_requires_prompt():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="prompt is required"):
         client.text_to_video.create(
-            model="runway", duration_seconds=5, output_resolution="720p"
+            model="runway",
+            duration_seconds=5,
+            output_resolution="720p",
+            aspect_ratio="16:9",
         )
 
 
@@ -156,21 +160,30 @@ def test_text_to_video_requires_duration_seconds():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="duration_seconds is required"):
         client.text_to_video.create(
-            model="runway", prompt="hi there", output_resolution="720p"
+            model="runway",
+            prompt="hi there",
+            output_resolution="720p",
+            aspect_ratio="16:9",
         )
 
 
 def test_text_to_video_requires_output_resolution():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="output_resolution is required"):
-        client.text_to_video.create(model="runway", prompt="hi there", duration_seconds=5)
+        client.text_to_video.create(
+            model="runway", prompt="hi there", duration_seconds=5, aspect_ratio="16:9"
+        )
 
 
 def test_text_to_video_rejects_invalid_output_resolution():
     client = RunwayClient(api_key="k", http_client=FakeHttp())
     with pytest.raises(ValidationError, match="output_resolution must be one of: 720p, 1080p"):
         client.text_to_video.create(
-            model="runway", prompt="hi there", duration_seconds=5, output_resolution="480p"
+            model="runway",
+            prompt="hi there",
+            duration_seconds=5,
+            output_resolution="480p",
+            aspect_ratio="16:9",
         )
 
 
@@ -185,6 +198,36 @@ def test_text_to_video_rejects_invalid_aspect_ratio():
             duration_seconds=5,
             output_resolution="720p",
             aspect_ratio="21:9",
+        )
+
+
+def test_text_to_video_requires_aspect_ratio_without_first_frame():
+    client = RunwayClient(api_key="k", http_client=FakeHttp())
+    with pytest.raises(
+        ValidationError,
+        match="aspect_ratio is required when first_frame_image_url is absent",
+    ):
+        client.text_to_video.create(
+            model="runway",
+            prompt="hi there",
+            duration_seconds=5,
+            output_resolution="720p",
+        )
+
+
+def test_text_to_video_forbids_aspect_ratio_with_first_frame():
+    client = RunwayClient(api_key="k", http_client=FakeHttp())
+    with pytest.raises(
+        ValidationError,
+        match="aspect_ratio is not allowed when first_frame_image_url is present",
+    ):
+        client.text_to_video.create(
+            model="runway",
+            prompt="hi there",
+            duration_seconds=5,
+            output_resolution="720p",
+            first_frame_image_url="https://cdn.runapi.ai/public/samples/first-frame.png",
+            aspect_ratio="16:9",
         )
 
 

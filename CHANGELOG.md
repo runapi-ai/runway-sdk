@@ -1,5 +1,11 @@
 # Changelog
 
+## [js/v0.2.10](https://github.com/runapi-ai/runway-sdk/releases/tag/js%2Fv0.2.10), [ruby/v0.2.9](https://github.com/runapi-ai/runway-sdk/releases/tag/ruby%2Fv0.2.9), [go/v0.2.10](https://github.com/runapi-ai/runway-sdk/releases/tag/go%2Fv0.2.10), [python/v0.2.2](https://github.com/runapi-ai/runway-sdk/releases/tag/python%2Fv0.2.2) - 2026-08-12
+
+### Fixed
+- Require aspect_ratio for text-only Runway video requests and reject it when first_frame_image_url is present using the shared Input Contract rules.
+
+
 ## [python/v0.2.1](https://github.com/runapi-ai/runway-sdk/releases/tag/python%2Fv0.2.1) - 2026-07-29
 
 ### Fixed

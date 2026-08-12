@@ -4,7 +4,7 @@ Dir.chdir(__dir__) do
 
   Gem::Specification.new do |spec|
     spec.name = "runapi-runway"
-    spec.version = "0.2.8"
+    spec.version = "0.2.9"
     spec.metadata["runapi_slug"] = "runway"
     spec.authors = ["RunAPI"]
     spec.email = ["contact@runapi.ai"]
@@ -23,6 +23,6 @@ Dir.chdir(__dir__) do
     spec.files = Dir.glob("lib/**/*") + %w[LICENSE README.md]
     spec.extra_rdoc_files = ["README.md"]
         spec.require_paths = ["lib"]
-    spec.add_dependency "runapi-core", "~> 0.3.0"
+    spec.add_dependency "runapi-core", "~> 0.3.5"
   end
 end
