@@ -86,10 +86,8 @@ def test_create_posts_compacted_body():
                 "prompt": "hello world",
                 "duration_seconds": 5,
                 "output_resolution": "720p",
-                "aspect_ratio": "16:9",
-            },
-        ),
-    ]
+                "aspect_ratio": "16:9"},
+        )]
     _, _, body = fake.calls[0]
     assert "model" not in body
     assert isinstance(result, TaskCreateResponse)
@@ -117,10 +115,8 @@ def test_extend_video_create_posts_compacted_body():
             {
                 "source_task_id": "t1",
                 "prompt": "keep going",
-                "output_resolution": "1080p",
-            },
-        ),
-    ]
+                "output_resolution": "1080p"},
+        )]
     _, _, body = fake.calls[0]
     assert "model" not in body
 
@@ -128,7 +124,7 @@ def test_extend_video_create_posts_compacted_body():
 def test_run_narrows_completed_type():
     fake = FakeHttp(
         {"id": "t1", "status": "pending"},
-        {"id": "t1", "status": "completed", "videos": [{"url": "https://x/y.mp4"}]},
+        {"id": "t1", "status": "completed", "usage": {"cost": 0.05}, "videos": [{"url": "https://x/y.mp4"}]},
     )
     client = RunwayClient(api_key="k", http_client=fake)
     result = client.text_to_video.run(

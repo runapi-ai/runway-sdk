@@ -31,8 +31,7 @@ func TestTextToVideoCreate(t *testing.T) {
 		Prompt:             "ocean spray",
 		DurationSeconds:    5,
 		OutputResolution:   OutputResolution720p,
-		FirstFrameImageURL: "https://cdn.runapi.ai/public/samples/first-frame.png",
-	})
+		FirstFrameImageURL: "https://cdn.runapi.ai/public/samples/first-frame.png"})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -83,7 +82,7 @@ func TestExtendVideoCreate(t *testing.T) {
 }
 
 func TestTextToVideoGet(t *testing.T) {
-	stub := &stubHTTPClient{response: json.RawMessage(`{"id":"task_txt_456","status":"completed","videos":[{"url":"https://file.runapi.ai/video.mp4"}],"images":[{"url":"https://file.runapi.ai/cover.png"}]}`)}
+	stub := &stubHTTPClient{response: json.RawMessage(`{"id":"task_txt_456","status":"completed", "usage": {"cost": 0.05},"videos":[{"url":"https://file.runapi.ai/video.mp4"}],"images":[{"url":"https://file.runapi.ai/cover.png"}]}`)}
 	client := NewClientWithHTTP(stub)
 	resp, err := client.TextToVideo.Get(context.Background(), "task_txt_456")
 	if err != nil {
