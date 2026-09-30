@@ -17,9 +17,9 @@ public final class TextToVideoParams {
 
   private TextToVideoParams(Builder builder) {
     this.model = builder.model;
-    this.prompt = RunwayParamUtils.requireNonBlank(builder.prompt, "prompt");
-    this.durationSeconds = java.util.Objects.requireNonNull(builder.durationSeconds, "durationSeconds");
-    this.outputResolution = RunwayParamUtils.requireNonBlank(builder.outputResolution, "outputResolution");
+    this.prompt = builder.prompt;
+    this.durationSeconds = builder.durationSeconds;
+    this.outputResolution = builder.outputResolution;
     this.firstFrameImageUrl = builder.firstFrameImageUrl;
     this.aspectRatio = builder.aspectRatio;
     this.watermark = builder.watermark;
@@ -73,14 +73,14 @@ public final class TextToVideoParams {
 
     /** Sets the model slug using a string value. */
     public Builder model(String value) {
-      this.model = RunwayParamUtils.requireNonBlankTrim(value, "model");
+      this.model = value;
       return this;
     }
 
 
     /** Sets the text prompt. */
     public Builder prompt(String value) {
-      this.prompt = RunwayParamUtils.requireNonBlank(value, "prompt");
+      this.prompt = value;
       return this;
     }
 
@@ -92,19 +92,19 @@ public final class TextToVideoParams {
 
     /** Sets the output resolution. */
     public Builder outputResolution(String value) {
-      this.outputResolution = RunwayParamUtils.requireNonBlank(value, "outputResolution");
+      this.outputResolution = value;
       return this;
     }
 
     /** Sets the first frame image URL. */
     public Builder firstFrameImageUrl(String value) {
-      this.firstFrameImageUrl = RunwayParamUtils.requireNonBlank(value, "firstFrameImageUrl");
+      this.firstFrameImageUrl = value;
       return this;
     }
 
     /** Sets the output aspect ratio. */
     public Builder aspectRatio(String value) {
-      this.aspectRatio = RunwayParamUtils.requireNonBlank(value, "aspectRatio");
+      this.aspectRatio = value;
       return this;
     }
 
@@ -116,7 +116,7 @@ public final class TextToVideoParams {
 
     /** Sets the webhook URL for task completion notifications. */
     public Builder callbackUrl(String value) {
-      this.callbackUrl = RunwayParamUtils.requireNonBlank(value, "callbackUrl");
+      this.callbackUrl = value;
       return this;
     }
 

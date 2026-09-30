@@ -15,9 +15,9 @@ public final class ExtendVideoParams {
 
   private ExtendVideoParams(Builder builder) {
     this.model = builder.model;
-    this.sourceTaskId = RunwayParamUtils.requireNonBlank(builder.sourceTaskId, "sourceTaskId");
-    this.prompt = RunwayParamUtils.requireNonBlank(builder.prompt, "prompt");
-    this.outputResolution = RunwayParamUtils.requireNonBlank(builder.outputResolution, "outputResolution");
+    this.sourceTaskId = builder.sourceTaskId;
+    this.prompt = builder.prompt;
+    this.outputResolution = builder.outputResolution;
     this.watermark = builder.watermark;
     this.callbackUrl = builder.callbackUrl;
   }
@@ -65,26 +65,26 @@ public final class ExtendVideoParams {
 
     /** Sets the model slug using a string value. */
     public Builder model(String value) {
-      this.model = RunwayParamUtils.requireNonBlankTrim(value, "model");
+      this.model = value;
       return this;
     }
 
 
     /** Sets the source task ID. */
     public Builder sourceTaskId(String value) {
-      this.sourceTaskId = RunwayParamUtils.requireNonBlank(value, "sourceTaskId");
+      this.sourceTaskId = value;
       return this;
     }
 
     /** Sets the text prompt. */
     public Builder prompt(String value) {
-      this.prompt = RunwayParamUtils.requireNonBlank(value, "prompt");
+      this.prompt = value;
       return this;
     }
 
     /** Sets the output resolution. */
     public Builder outputResolution(String value) {
-      this.outputResolution = RunwayParamUtils.requireNonBlank(value, "outputResolution");
+      this.outputResolution = value;
       return this;
     }
 
@@ -96,7 +96,7 @@ public final class ExtendVideoParams {
 
     /** Sets the webhook URL for task completion notifications. */
     public Builder callbackUrl(String value) {
-      this.callbackUrl = RunwayParamUtils.requireNonBlank(value, "callbackUrl");
+      this.callbackUrl = value;
       return this;
     }
 
